@@ -8,6 +8,7 @@ Well the most rudimentary way to map N to m would be to use a modulo operator:
 ```c
 static inline unsigned int
 hash_bin_index(struct hash_table* table, unsigned int key) {
+    // Modulos are costly so, you'd either take a power of 2 or a Mersenne prime to reduce these to bitwise and add/subtract opeartors for better performance.
     return key % table->size;
 }
 ```

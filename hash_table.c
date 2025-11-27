@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "hash_table_with_free_bit.h"
 #include "hash_table_without_free_bit.h"
 
 int main() {

@@ -1,7 +1,10 @@
 #ifndef HASH_TABLE_WITH_FREE_BIT_H
 #define HASH_TABLE_WITH_FREE_BIT_H
 
+#include <stdint.h>
 #include <stdlib.h>
+
+#include "hash_table_helper.h"
 
 /*
  * What should the API look like for a hash table?
@@ -25,12 +28,13 @@ struct bin {
 };
 
 struct hash_table_with_free_bit {
-  struct bin *bins;
   unsigned int size;
+  uint8_t mersenne_prime_power;
+  struct bin *bins;
 };
 
 struct hash_table_with_free_bit *
-new_table_with_free_bit(unsigned int size) {
+new_table_with_free_bit(uint8_t mersenne_prime_power, unsigned int size) {
   struct hash_table_with_free_bit *table = (struct hash_table_with_free_bit *)malloc(sizeof *table);
   struct bin *bins = (struct bin *)malloc(size * sizeof *bins);
 
@@ -38,7 +42,7 @@ new_table_with_free_bit(unsigned int size) {
   // TODO: Look into if goto is a good fit for error handling here.
   if (!table || !bins) goto error;
 
-  *table = (struct hash_table_with_free_bit){.size = size, .bins = bins};
+  *table = (struct hash_table_with_free_bit){.size = size, .bins = bins, .mersenne_prime_power = mersenne_prime_power};
 
   struct bin *beg = table->bins, *end = beg + size;
   for (struct bin *bin = beg; bin != end; ++bin) {
@@ -57,6 +61,11 @@ void
 delete_table_with_free_bit(struct hash_table_with_free_bit *table) {
   free(table->bins);
   free(table);
+}
+
+static inline struct bin *
+hash_bin(struct hash_table_with_free_bit *table, unsigned int key) {
+  return (table->bins) + hash_bin_index(key, table->mersenne_prime_power);
 }
 
 #endif
