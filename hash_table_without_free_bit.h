@@ -14,12 +14,11 @@ struct hash_table_without_free_bit {
 
 struct hash_table_without_free_bit *
 new_table_without_free_bit(unsigned int size) {
-  struct hash_table_without_free_bit *table =
-      (struct hash_table_without_free_bit *)malloc(sizeof *table);
+  struct hash_table_without_free_bit *table = (struct hash_table_without_free_bit *)malloc(sizeof *table);
   unsigned int *bins = (unsigned int *)malloc(size * sizeof *bins);
 
-  if (!table || !bins)
-    goto error;
+  // Sadly malloc can fail.
+  if (!table || !bins) goto error;
 
   *table = (struct hash_table_without_free_bit){.size = size, .bins = bins};
 
@@ -36,7 +35,8 @@ error:
   return NULL;
 }
 
-void delete_table_without_free_bit(struct hash_table_without_free_bit *table) {
+void
+delete_table_without_free_bit(struct hash_table_without_free_bit *table) {
   free(table->bins);
   free(table);
 }
