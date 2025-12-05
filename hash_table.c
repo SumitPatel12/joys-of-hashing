@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "hash_table_without_free_bit.h"
+#include "modulo_vs_bitshift_benchmark.h"
 
 int main() {
     // Intersting to note that without the \n at the end, I got an output of: "Maybe Hash Table!!%".
@@ -7,6 +8,9 @@ int main() {
     // :woozy_face:
     printf("Maybe Hash Table!!\n");
     printf("DEAFULT_KEY: %u\n", DEFAULT_KEY);
+
+    // Run the modulo vs bit-shift benchmark
+    run_modulo_vs_bitshift_benchmark(DEFAULT_ITERATIONS);
 
     return 0;
 }
