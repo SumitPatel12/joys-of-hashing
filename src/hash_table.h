@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "hash_table_helper.h"
-
 /*
  * What should the API look like for a hash table?
  * 1. Constructor  - Creates and initializes the table.
@@ -36,16 +34,22 @@ struct hash_table {
   unsigned int *bins;
 };
 
-struct hash_table *new_table(uint8_t mersenne_prime_power, unsigned int size);
+struct hash_table *
+new_table(uint8_t mersenne_prime_power, unsigned int size);
 
-void delete_table(struct hash_table *table);
+void
+delete_table(struct hash_table *table);
 
-unsigned int *hash_bin(struct hash_table *table, unsigned int key);
+unsigned int *
+hash_bin(struct hash_table *table, unsigned int key);
 
-int insert_key(struct hash_table *table, unsigned int key);
+int
+insert_key(struct hash_table *table, unsigned int key);
 
-bool contains_key(struct hash_table *table, unsigned int key);
+bool
+contains_key(struct hash_table *table, unsigned int key);
 
-int delete_key(struct hash_table *table, unsigned int key);
+int
+delete_key(struct hash_table *table, unsigned int key);
 
 #endif

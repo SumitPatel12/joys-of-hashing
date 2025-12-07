@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "hash_table_helper.h"
 
 struct hash_table *
 new_table(uint8_t mersenne_prime_power, unsigned int size) {

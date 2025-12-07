@@ -17,10 +17,13 @@ struct hash_table_with_free_bit {
   struct bin *bins;
 };
 
-struct hash_table_with_free_bit *new_table_with_free_bit(uint8_t mersenne_prime_power, unsigned int size);
+struct hash_table_with_free_bit *
+new_table_with_free_bit(uint8_t mersenne_prime_power, unsigned int size);
 
-void delete_table_with_free_bit(struct hash_table_with_free_bit *table);
+void
+delete_table_with_free_bit(struct hash_table_with_free_bit *table);
 
-struct bin *hash_bin_with_free_bit(struct hash_table_with_free_bit *table, unsigned int key);
+struct bin *
+hash_bin_with_free_bit(struct hash_table_with_free_bit *table, unsigned int key);
 
 #endif
