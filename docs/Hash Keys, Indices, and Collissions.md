@@ -61,6 +61,8 @@ uint64_t mod_mersenne(uint64_t x, uint8_t s) {
 ```
 
 ## Collission Math!!
+The Birthday Paradox is quite similar and NumberPhile just release [Closer Look at the Birthday Paradox](https://youtu.be/OUQVhnuTMVU?si=tMY-U53cFdtr7r5F) video yesterday. What are the chances???? (Pun Intended), There are better videos out there but this was too big of a coincidence for me to not write it down.
+
 I was too lazy to type it after I did it on the board once :shrug:
 The formula for at least one collission given n keys hashing to m bins, and n <= m is:
 ![Formula](../assets/Probability_Formula.png)

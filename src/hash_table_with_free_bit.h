@@ -6,22 +6,6 @@
 
 #include "hash_table_helper.h"
 
-/*
- * What should the API look like for a hash table?
- * 1. Constructor  - Creates and initializes the table.
- * 2. Destructor   - Of course deletes the table and frees any allocated space.
- * 3. Insert Key   - Inserts a key in the hash table.
- * 4. Delete Key   - Deletes a key from the hash table.
- * 5. Contains Key - Checks whether or not the given key is present in the hash table.
- * 6. Resize       - Resize the hash table.
- */
-
-/*
- * While you could do something like this, it's space overhead is significant.
- * Reason being we can't just use one bit, so we go with an int, which depending
- * on the underlying hardware could be 4 bytes or 8 bytes. which is 31 or 63
- * wasted bits. Also alignment issues.
- */
 struct bin {
   unsigned int is_free : 1;
   unsigned int key;
