@@ -10,9 +10,9 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
-# Set optimization flags
-set(CMAKE_C_FLAGS_RELEASE "-O2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+# Set aggressive optimization flags
+set(CMAKE_C_FLAGS_RELEASE "-O3 -march=native -mtune=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=native -mtune=native")
 
 # Define source files
 set(HASH_TABLE_SOURCES

@@ -17,19 +17,19 @@ Benchmarking Mersenne prime modulo...
 ╚════════════════════════════════════════════════════════════════╝
 
 === Method Comparison ===
-  Non-prime modulo ((1 << 32) - 6):     45.527 ms
-  Power of two bitmask ((1 << 32) - 1): 9.735 ms
-  Mersenne prime bitshift:              33.251 ms
-  Mersenne prime modulo:                37.494 ms
+  Non-prime modulo ((1 << 32) - 6):     61.853 ms
+  Power of two bitmask ((1 << 32) - 1): 10.545 ms
+  Mersenne prime bitshift:              33.833 ms
+  Mersenne prime modulo:                35.249 ms
 
 === Performance Analysis ===
-  Fastest method: Power of two bitmask (9.735 ms)
+  Fastest method: Power of two bitmask (10.545 ms)
 
   Relative performance:
-    Non-prime modulo:        4.68x slower than fastest
+    Non-prime modulo:        5.87x slower than fastest
     Power of two bitmask:    1.00x slower than fastest
-    Mersenne prime bitshift: 3.42x slower than fastest
-    Mersenne prime modulo:   3.85x slower than fastest
+    Mersenne prime bitshift: 3.21x slower than fastest
+    Mersenne prime modulo:   3.34x slower than fastest
 
 === SUMMARY ===
 Power of 2 bitmask:
