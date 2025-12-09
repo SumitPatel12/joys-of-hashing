@@ -1,3 +1,4 @@
+# This was written by claude :shrug:, same for the build.md file.
 cmake_minimum_required(VERSION 3.15)
 project(joys-of-hashing C)
 
