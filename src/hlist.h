@@ -5,6 +5,11 @@
 #include <stdlib.h>
 
 /*
+ * Well seems like the **prev version is not used in the actual hash table implementation. It's just a norma one.
+ * This was a good aside nonetheless.
+ */
+
+/*
  The author suggested something like this which would work well no doubt.
 
  struct linked_list {
@@ -56,8 +61,7 @@ struct hlist_node {
   struct hlist_node** pprev;
 };
 
-static void
-destroy_hlist(struct hlist_head* h) {}
+// TODO: Maybe add some kind of destructor if required. As this is an intrusive linked list we likely won't need one.
 
 // Initialize an empty hlist_head.
 #define HLIST_HEAD_INIT {.first = NULL}
@@ -80,7 +84,7 @@ hlist_empty(const struct hlist_head* h) {
   return !h->first;
 };
 
-// Deletes the given node from the list in O(1)
+// Deletes the given node from the list leaving it's pointers unchanged.
 static inline void
 hlist_delete_node(struct hlist_node* n) {
   struct hlist_node* next = n->next;
@@ -97,12 +101,14 @@ hlist_delete_node(struct hlist_node* n) {
 
   // Since this is an intrusive linked list we don't need to de-init and free it. The parent structure will be
   // responsible for that I think.
-  //
-  // INIT_HLIST_NODE(n);
-  // free(n);
-
-  // TODO: Maybe do something like free(container_of(n));
 };
+
+// Deletes the node from the list and initializes it's pointers to NULL
+static inline void
+hlist_delete_node_init(struct hlist_node* n) {
+  hlist_delete_node(n);
+  INIT_HLIST_NODE(n);
+}
 
 // Add head_node to the hlist
 static inline void

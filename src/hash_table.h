@@ -28,11 +28,81 @@
 // will be on this one.
 #define DEFAULT_KEY (unsigned int)0
 
+struct link {
+  unsigned int key;
+  struct link *next;
+};
+
+typedef struct link **LIST;
+
+#define EMPTY_LIST &((struct link *){NULL})
+
 struct hash_table {
   unsigned int size;
   uint8_t mersenne_prime_power;
-  unsigned int *bins;
+  LIST bins;
 };
+
+static inline void
+free_head(LIST list) {
+  struct link *next = (*list)->next;
+  free(*list);
+  *list = next;
+}
+
+void
+free_list(LIST list) {
+  while (*list) {
+    free_head(list);
+  }
+}
+
+static inline LIST
+create_owned_list() {
+  struct link **ptr = malloc(sizeof *ptr);
+  *ptr = NULL;
+  return ptr;
+};
+
+static inline void
+free_owned_list(LIST list) {
+  free_list(list);
+  free(list);
+}
+
+static inline struct link *
+new_link(unsigned int key, struct link *next) {
+  struct link *link = malloc(sizeof *link);
+  *link = (struct link){.key = key, .next = next};
+  return link;
+}
+
+static inline void
+add_element(LIST list, unsigned int key) {
+  *list = new_link(key, *list);
+}
+
+static inline LIST
+find_key(LIST list, unsigned int key) {
+  for (; *list; list = &(*list)->next) {
+    if ((*list)->key == key) {
+      return list;
+    }
+  }
+  return NULL;
+}
+
+static inline bool
+contains_element(LIST list, unsigned int key) {
+  return find_key(list, key) != NULL;
+}
+
+static inline void
+delete_element(LIST list, unsigned int key) {
+  if ((list = find_key(list, key))) {
+    free_head(list);
+  }
+}
 
 struct hash_table *
 new_table(uint8_t mersenne_prime_power, unsigned int size);
@@ -40,16 +110,16 @@ new_table(uint8_t mersenne_prime_power, unsigned int size);
 void
 delete_table(struct hash_table *table);
 
-unsigned int *
-hash_bin(struct hash_table *table, unsigned int key);
+LIST
+get_bin_for_key(struct hash_table *table, unsigned int key);
 
-int
+void
 insert_key(struct hash_table *table, unsigned int key);
 
 bool
 contains_key(struct hash_table *table, unsigned int key);
 
-int
+void
 delete_key(struct hash_table *table, unsigned int key);
 
 #endif

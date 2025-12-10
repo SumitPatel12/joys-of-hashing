@@ -38,3 +38,8 @@ Makefile
 
 # Test/benchmark outputs (optional - you might want to commit result.txt)
 # benchmarks/result.txt
+
+# Node.js / Animations
+*animations
+animations/node_modules/
+animations/dist/
