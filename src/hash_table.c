@@ -12,6 +12,7 @@ new_table(uint8_t mersenne_prime_power, unsigned int size) {
 
   table->bins = malloc(size * sizeof *table->bins);
   table->size = size;
+  table->mersenne_prime_power = mersenne_prime_power;
 
   // Sadly malloc can fail.
   if (!table->bins) goto error;
@@ -19,6 +20,11 @@ new_table(uint8_t mersenne_prime_power, unsigned int size) {
   for (LIST bin = table->bins; bin < table->bins + table->size; bin++) {
       *bin = NULL;
   }
+
+#ifdef WITH_METRICS
+  table->collisions = 0;
+  table->count = 0;
+#endif
 
   return table;
 
@@ -50,6 +56,12 @@ insert_key(struct hash_table *table, unsigned int key) {
 
   // No duplicates
   if (!contains_element(bin, key)) {
+#ifdef WITH_METRICS
+      if (*bin) {
+          table->collisions++;
+      }
+      table->count++;
+#endif
       add_element(bin, key);
   }
 }
@@ -69,3 +81,13 @@ delete_key(struct hash_table *table, unsigned int key) {
         delete_element(bin, key);
     }
 }
+
+#ifdef WITH_METRICS
+#include <stdio.h>
+void
+print_metrics(struct hash_table *table) {
+    printf("Total stats:\n");
+    printf("Count      : %zu\n", table->count);
+    printf("Collisions : %zu\n", table->collisions);
+}
+#endif

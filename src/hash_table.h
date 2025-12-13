@@ -40,6 +40,10 @@ typedef struct link **LIST;
 struct hash_table {
   unsigned int size;
   uint8_t mersenne_prime_power;
+#ifdef WITH_METRICS
+  size_t collisions;
+  size_t count;
+#endif
   LIST bins;
 };
 
@@ -50,7 +54,7 @@ free_head(LIST list) {
   *list = next;
 }
 
-void
+static inline void
 free_list(LIST list) {
   while (*list) {
     free_head(list);
@@ -121,5 +125,10 @@ contains_key(struct hash_table *table, unsigned int key);
 
 void
 delete_key(struct hash_table *table, unsigned int key);
+
+#ifdef WITH_METRICS
+void
+print_metrics(struct hash_table *table);
+#endif
 
 #endif

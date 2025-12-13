@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "hash_table_helper.h"
-
 struct bin {
   unsigned int is_free : 1;
   unsigned int key;
